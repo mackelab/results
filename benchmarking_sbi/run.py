@@ -146,7 +146,7 @@ def compute_metrics_df(
     log: logging.Logger = logging.getLogger(__name__),
 ) -> pd.DataFrame:
     """Compute all metrics, returns dataframe
-    
+
     Args:
         task_name: Task
         num_observation: Observation
@@ -155,7 +155,7 @@ def compute_metrics_df(
         path_predictive_samples: Path to predictive samples
         path_log_prob_true_parameters: Path to NLTP
         log: Logger
-    
+
     Returns:
         Dataframe with results
     """
@@ -209,6 +209,8 @@ def compute_metrics_df(
         "MMD_Z": "metrics.mmd(X=reference_posterior_samples, Y=algorithm_posterior_samples, z_score=True)",
         "KSD_GAUSS": "metrics.ksd(task=task, num_observation=num_observation, samples=algorithm_posterior_samples, sig2=float(torch.median(torch.pdist(reference_posterior_samples))**2), log=False)",
         "MEDDIST": "metrics.median_distance(predictive_samples, observation)",
+        "MEANERR": "metrics.mean_error(reference_posterior_samples, algorithm_posterior_samples, task.get_prior_dist().variance)",
+        "VARERR": "metrics.variance_error(reference_posterior_samples, algorithm_posterior_samples, task.get_prior_dist().variance)",
         #
         # 1K samples
         #

@@ -4,10 +4,10 @@ run: sbi.snle.run
 device: cpu
 params:
   num_rounds: 1
-  neural_net: maf
+  neural_net: nsf
   hidden_features: 50
   simulation_batch_size: 1000
-  training_batch_size: 10000
+  training_batch_size: 1000
   automatic_transforms_enabled: true
   mcmc_parameters:
     num_chains: 100
@@ -18,3 +18,7 @@ params:
     sir_num_batches: 100
   z_score_x: true
   z_score_theta: true
+  stop_after_epochs: 20
+  validation_fraction: 0.1
+  num_transforms: 1
+  num_bins: 25

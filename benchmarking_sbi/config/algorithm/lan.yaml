@@ -1,0 +1,13 @@
+# @package _group_
+name: LAN
+run: lan.lan.run
+device: cpu
+params:
+  automatic_transforms_enabled: true
+  mcmc_parameters:
+    num_chains: 100
+    thin: 10
+    warmup_steps: 100
+    init_strategy: sir
+    sir_batch_size: 1000
+    sir_num_batches: 100
