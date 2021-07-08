@@ -161,6 +161,11 @@ def compile_df(
         row["num_observation"] = cfg["task"]["num_observation"]
         row["algorithm"] = cfg["algorithm"]["name"]
         row["seed"] = cfg["seed"]
+        try:
+            row["num_bins"] = cfg["algorithm"]["params"]["num_bins"]
+            row["num_transforms"] = cfg["algorithm"]["params"]["num_transforms"]
+        except:
+            pass
 
         # Metrics df
         if path_metrics.exists():

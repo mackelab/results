@@ -1,5 +1,5 @@
 # @package _group_
-name: LAN_ANA
+name: LAN-ANA
 run: lan.lan_ana.run
 device: cpu
 params:

@@ -1,5 +1,5 @@
 # @package _group_
-name: LAN
+name: LAN-KDE
 run: lan.lan.run
 device: cpu
 params:

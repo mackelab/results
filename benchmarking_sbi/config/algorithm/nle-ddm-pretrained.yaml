@@ -1,0 +1,19 @@
+# @package _group_
+name: NLE
+run: lan.nle-ddm-pretrained.run
+device: cpu
+params:
+  mcmc_parameters:
+    num_chains: 100
+    thin: 10
+    warmup_steps: 100
+    init_strategy: sir
+    sir_batch_size: 100
+    sir_num_batches: 1000
+  num_transforms: 5
+  num_bins: 5
+  use_log_rts: true
+  tails: rectified
+  tail_bound: 5.0
+  tail_bound_eps: 1e-5
+  base_distribution: lognormal
