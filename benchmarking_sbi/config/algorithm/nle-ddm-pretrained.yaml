@@ -8,8 +8,8 @@ params:
     thin: 10
     warmup_steps: 100
     init_strategy: sir
-    sir_batch_size: 100
-    sir_num_batches: 1000
+    sir_batch_size: 1000
+    sir_num_batches: 100
   num_transforms: 5
   num_bins: 5
   use_log_rts: true
