@@ -1,5 +1,6 @@
 import importlib
 import logging
+import pickle
 import random
 import socket
 import sys
@@ -76,18 +77,28 @@ def main(cfg: DictConfig) -> None:
         samples = outputs
         num_simulations_simulator = float("nan")
         log_prob_true_parameters = float("nan")
-    elif type(outputs) == tuple and len(outputs) == 3:
+        posterior = None
+        summary = None
+    elif type(outputs) == tuple and len(outputs) == 5:
         samples = outputs[0]
         num_simulations_simulator = float(outputs[1])
         log_prob_true_parameters = (
             float(outputs[2]) if outputs[2] is not None else float("nan")
         )
+        posterior = outputs[3]
+        summary = outputs[4]
     else:
         raise NotImplementedError
     save_tensor_to_csv(path_samples, samples, columns=task.get_labels_parameters())
     save_float_to_csv(path_runtime, runtime)
     save_float_to_csv(path_num_simulations_simulator, num_simulations_simulator)
     save_float_to_csv(path_log_prob_true_parameters, log_prob_true_parameters)
+
+    # Pickle posterior
+    with open("posterior.pkl", "wb") as handle:
+        pickle.dump(posterior, handle)
+    with open("summary.pkl", "wb") as handle:
+        pickle.dump(summary, handle)
 
     # Predictive samples
     log.info("Draw posterior predictive samples")
@@ -146,7 +157,7 @@ def compute_metrics_df(
     log: logging.Logger = logging.getLogger(__name__),
 ) -> pd.DataFrame:
     """Compute all metrics, returns dataframe
-    
+
     Args:
         task_name: Task
         num_observation: Observation
@@ -155,7 +166,7 @@ def compute_metrics_df(
         path_predictive_samples: Path to predictive samples
         path_log_prob_true_parameters: Path to NLTP
         log: Logger
-    
+
     Returns:
         Dataframe with results
     """

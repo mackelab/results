@@ -2,6 +2,7 @@ import logging
 import math
 import os
 from pathlib import Path
+import pickle
 from typing import Dict, List, Optional, Union
 
 import deneb as den
@@ -30,7 +31,7 @@ def get_colors(
         column: Column containing algorithms
         hex: If True, will return hex values instead of RGB strings
         include_defaults: If True, will include default colors in returned dict
-    
+
     Returns:
         Dictionary mapping algorithms to colors
     """
@@ -112,14 +113,17 @@ def get_df(
 
 
 def get_float_from_csv(
-    path: Union[str, Path], dtype: type = np.float32,
+    path: Union[str, Path],
+    dtype: type = np.float32,
 ):
     """Get a single float from a csv file"""
     with open(path, "r") as fh:
         return np.loadtxt(fh).astype(dtype)
 
 
-def compile_df(basepath: str,) -> pd.DataFrame:
+def compile_df(
+    basepath: str,
+) -> pd.DataFrame:
     """Compile dataframe for further analyses
 
     `basepath` is the path to a folder over which to recursively loop. All information
@@ -158,6 +162,11 @@ def compile_df(basepath: str,) -> pd.DataFrame:
         row["num_observation"] = cfg["task"]["num_observation"]
         row["algorithm"] = cfg["algorithm"]["name"]
         row["seed"] = cfg["seed"]
+        try:
+            with open(path_base / "summary.pkl", "rb") as handle:
+                row["epochs"] = pickle.load(handle)["epochs"][0]
+        except:
+            pass
 
         # Metrics df
         if path_metrics.exists():
@@ -229,7 +238,10 @@ def compile_df(basepath: str,) -> pd.DataFrame:
 
 
 def apply_df(
-    df, row_fn=None, *args, **kwargs,
+    df,
+    row_fn=None,
+    *args,
+    **kwargs,
 ):
     """Apply function for each row of dataframe
 
@@ -249,7 +261,10 @@ def apply_df(
 
 
 def clean(
-    row, delete_unused_metrics=True, mmd_clip=True, mmd_clip_print=False,
+    row,
+    delete_unused_metrics=True,
+    mmd_clip=True,
+    mmd_clip_print=False,
 ):
     """Clean rows
 
