@@ -1,0 +1,24 @@
+# @package _group_
+name: MNLE
+run: sbi.mnle.run
+device: cpu
+params:
+  simulation_batch_size: 1000
+  training_batch_size: 100
+  automatic_transforms_enabled: true
+  mnle_parameters:
+    log_transform_x: false
+    num_bins: 5
+    num_transforms: 2
+    tail_bound: 10.0
+    hidden_layers: 1
+    hidden_features: 10
+  mcmc_parameters:
+    num_chains: 100
+    thin: 10
+    warmup_steps: 100
+    init_strategy: sir
+    # sir_batch_size: 1000
+    # sir_num_batches: 100
+  z_score_x: independent
+  z_score_theta: independent
