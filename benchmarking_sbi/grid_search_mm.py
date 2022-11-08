@@ -21,14 +21,14 @@ from joblib import Parallel, delayed
 
 task = sbibm.get_task("ddm")
 prior = task.get_prior_dist()
-simulator = task.get_simulator()
+# simulator = task.get_simulator()
 
 # overall data set
 num_examples = 100000
 nxos = 1000
 nthos = 10000
 l_lower_bound = 1e-7
-num_workers = 18
+num_workers = 80
 
 # xos = simulator(prior.sample((nxos,)))
 # test_thetas = [prior.sample((nthos,)) for _ in range(nxos)]
@@ -80,7 +80,7 @@ def run(
     training_batch_size=100,
     stop_after_epochs=30,
     idx=-1,
-    repetitions=2,
+    repetitions=5,
 ):
     results = []
     for repi in range(repetitions):
@@ -126,7 +126,7 @@ def run(
 
             mm = MixedModelSyntheticDDM(choice_net, rt_flow, use_log_rts=use_log_rts)
 
-            with open(f"models/largesweep/mm_{idx}_{repi}.p", "wb") as fh:
+            with open(f"models/largesweep5/mm_{idx}_{repi}.p", "wb") as fh:
                 pickle.dump(mm, fh)
 
             # evaluate
@@ -196,7 +196,7 @@ results = Parallel(n_jobs=num_workers)(
     delayed(run)(*arg, idx=idx) for idx, arg in enumerate(arglist)
 )
 
-with open(f"results_{len(arglist)}_largesweep.p", "wb") as fh:
+with open(f"results_{len(arglist)}_largesweep5.p", "wb") as fh:
     pickle.dump(dict(results=results, arglist=arglist), fh)
 
 # with open(f"results_{len(arglist)}.p", "rb") as fh:
