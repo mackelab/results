@@ -1,0 +1,23 @@
+name: NPE
+run: sbi.snpe.run
+device: cpu
+params:
+  num_rounds: 1
+  neural_net: nsf
+  hidden_features: 20
+  simulation_batch_size: 1000
+  training_batch_size: 1000
+  num_atoms: 10
+  automatic_transforms_enabled: false
+  z_score_x: independent
+  z_score_theta: independent
+  trial_net_kwargs: 
+    input_dim: 2
+    output_dim: 4
+    num_hiddens: 10
+    num_layers: 2
+  perm_net_kwargs:
+    combining_operation: mean
+    num_layers: 2
+    num_hiddens: 20
+    output_dim: 10
