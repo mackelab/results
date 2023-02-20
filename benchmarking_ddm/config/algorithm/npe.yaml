@@ -9,5 +9,5 @@ params:
   training_batch_size: 10000
   num_atoms: 10
   automatic_transforms_enabled: false
-  z_score_x: true
-  z_score_theta: true
+  z_score_x: independent
+  z_score_theta: independent
