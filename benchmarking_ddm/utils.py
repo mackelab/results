@@ -158,6 +158,8 @@ def compile_df(basepath: str,) -> pd.DataFrame:
         row["num_observation"] = cfg["task"]["num_observation"]
         row["algorithm"] = cfg["algorithm"]["name"]
         row["seed"] = cfg["seed"]
+        row["trial_output_dim"] = cfg["algorithm"]["params"]["trial_net_kwargs"]["output_dim"]
+        row["perm_output_dim"] = cfg["algorithm"]["params"]["perm_net_kwargs"]["output_dim"]
 
         # Metrics df
         if path_metrics.exists():
